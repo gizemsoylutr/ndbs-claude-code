@@ -52,6 +52,12 @@ Use TypeScript handlers only when CDS is not enough.
 - Keep domain logic, integration logic, and orchestration separated.
 - Prefer small, cohesive classes over large mixed-responsibility files.
 
+## 8a. Type Safety Is Required
+- Do not introduce TypeScript `any`.
+- Treat new `any` usage as a defect that must be fixed before merge unless the user explicitly approves a narrow exception.
+- Prefer concrete interfaces, CAP-generated types, generics, discriminated unions, or `unknown` with explicit narrowing.
+- In reviews, call out newly introduced `any` as a high-signal finding, not a style preference.
+
 ## 9. HTTP Integration Standards
 - For outbound HTTP calls, use an HTTP client abstraction instead of ad-hoc request code.
 - In SAP environments, prefer Destinations for endpoint configuration and connectivity.
@@ -94,3 +100,8 @@ Use TypeScript handlers only when CDS is not enough.
 - Prefer testing service behavior through CAP APIs instead of testing internal implementation details.
 - Add tests for custom handlers, authorization-relevant behavior, and CDS-based reporting services when they are introduced.
 - Do not introduce custom test harnesses if `cds.test` is sufficient.
+
+## 16. Review Priorities
+- In code review, prioritize correctness, regression risk, security, missing tests, and violations of these repository rules over style comments.
+- Flag CDS-first violations, business logic inside handlers or services, direct DB entity exposure, hardcoded integration endpoints, and new `any` usage.
+- Present findings before summary whenever review output is requested.
