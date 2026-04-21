@@ -88,3 +88,9 @@ Use TypeScript handlers only when CDS is not enough.
 - Use annotations as much as possible to drive the UI and reduce custom frontend logic.
 - If reports are required on the backend, model them with CDS views first.
 - Keep custom code in the service layer to a minimum and prefer CDS modeling, views, and annotations over custom service logic.
+
+## 15. CAP Testing Defaults
+- For CAP backend tests, use `cds.test` by default.
+- Prefer testing service behavior through CAP APIs instead of testing internal implementation details.
+- Add tests for custom handlers, authorization-relevant behavior, and CDS-based reporting services when they are introduced.
+- Do not introduce custom test harnesses if `cds.test` is sufficient.
