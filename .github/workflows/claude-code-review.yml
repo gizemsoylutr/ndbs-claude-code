@@ -42,3 +42,30 @@ jobs:
           # See https://github.com/anthropics/claude-code-action/blob/main/docs/usage.md
           # or https://code.claude.com/docs/en/cli-reference for available options
 
+      - name: Evaluate Merge Risk
+        id: claude-gate
+        uses: anthropics/claude-code-action@v1
+        with:
+          claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          prompt: |
+            Review PR #${{ github.event.pull_request.number }} in ${{ github.repository }}.
+
+            Apply the repository rules from CLAUDE.md, especially:
+            - no new TypeScript any
+            - never expose DB entities directly in services
+            - keep business logic out of handlers/services when CDS should handle it
+            - prioritize correctness, regression risk, security, missing tests, and repo rule violations
+
+            Return structured output only.
+            Mark has_blocker true only if the PR contains at least one issue that should block merge.
+            Keep summary to one sentence.
+          claude_args: |
+            --json-schema {"type":"object","properties":{"has_blocker":{"type":"boolean"},"summary":{"type":"string"},"reason":{"type":"string"}},"required":["has_blocker","summary"]}
+
+      - name: Fail if Claude found a blocker
+        if: fromJSON(steps.claude-gate.outputs.structured_output).has_blocker == true
+        run: |
+          echo "Claude marked this PR as not safe to merge."
+          echo "Summary: ${{ fromJSON(steps.claude-gate.outputs.structured_output).summary }}"
+          exit 1
+
