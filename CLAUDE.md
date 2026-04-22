@@ -59,9 +59,11 @@ Use TypeScript handlers only when CDS is not enough.
 - In reviews, call out newly introduced `any` as a high-signal finding, not a style preference.
 
 ## 9. HTTP Integration Standards
-- For outbound HTTP calls, use @sap-cloud-sdk/http-client and @sap-cloud-sdk/connectivity instead of ad-hoc request code.
-- In SAP environments, prefer Destinations for endpoint configuration and connectivity.
-- Do not hardcode service URLs, credentials, or tenant-specific endpoints.
+- All outbound HTTP calls from CAP or Node.js services must use `@sap-cloud-sdk/http-client`.
+- In SAP-managed environments, configure remote systems via Destinations and use `@sap-cloud-sdk/connectivity`.
+- Do not use ad-hoc HTTP clients such as raw `fetch`, `axios`, or Node `http`/`https` for business integrations unless a documented exception is explicitly approved.
+- Do not hardcode service URLs, credentials, tokens, or tenant-specific endpoints in code.
+- If a Destination cannot be used, document the reason and keep endpoint and authentication configuration externalized.
 
 ## 10. Skills for Repeated Work
 - Use a skill when the same SAP task pattern repeats.
