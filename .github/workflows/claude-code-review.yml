@@ -36,6 +36,7 @@ jobs:
         uses: anthropics/claude-code-action@v1
         with:
           claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          github_token: ${{ github.token }}
           plugin_marketplaces: 'https://github.com/anthropics/claude-code.git'
           plugins: 'code-review@claude-code-plugins'
           prompt: '/code-review:code-review ${{ github.repository }}/pull/${{ github.event.pull_request.number }}'
@@ -44,9 +45,11 @@ jobs:
 
       - name: Evaluate Merge Risk
         id: claude-gate
+        timeout-minutes: 10
         uses: anthropics/claude-code-action@v1
         with:
           claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          github_token: ${{ github.token }}
           prompt: |
             Review PR #${{ github.event.pull_request.number }} in ${{ github.repository }}.
 
@@ -60,6 +63,7 @@ jobs:
             Mark has_blocker true only if the PR contains at least one issue that should block merge.
             Keep summary to one sentence.
           claude_args: |
+            --max-turns 4
             --json-schema {"type":"object","properties":{"has_blocker":{"type":"boolean"},"summary":{"type":"string"},"reason":{"type":"string"}},"required":["has_blocker","summary"]}
 
       - name: Fail if Claude found a blocker

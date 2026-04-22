@@ -59,7 +59,7 @@ Use TypeScript handlers only when CDS is not enough.
 - In reviews, call out newly introduced `any` as a high-signal finding, not a style preference.
 
 ## 9. HTTP Integration Standards
-- For outbound HTTP calls, use an HTTP client abstraction instead of ad-hoc request code.
+- For outbound HTTP calls, use @sap-cloud-sdk/http-client and @sap-cloud-sdk/connectivity instead of ad-hoc request code.
 - In SAP environments, prefer Destinations for endpoint configuration and connectivity.
 - Do not hardcode service URLs, credentials, or tenant-specific endpoints.
 
