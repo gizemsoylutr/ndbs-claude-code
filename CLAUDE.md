@@ -66,6 +66,7 @@ Use TypeScript handlers only when CDS is not enough.
 ## 10. Skills for Repeated Work
 - Use a skill when the same SAP task pattern repeats.
 - Good candidates include CAP service design checks, CDS review, UI5 binding review, and Fiori annotation checks.
+- Good candidates also include drafting SAP CAP backend tests with the local `unit-test` skill.
 - Do not create a skill for one-off prompts.
 
 ## 11. Subagents for Parallel Work
