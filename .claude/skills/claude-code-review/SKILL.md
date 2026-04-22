@@ -1,6 +1,8 @@
 ---
 name: claude-code-review
 description: Review pull requests, diffs, patches, and code snippets for this repository with a findings-first bug-risk mindset. Use when reviewing SAP CAP, CDS, UI5, TypeScript, handlers, services, or integration changes and when repo-specific rules such as CDS-first design, thin handlers, and the ban on TypeScript any must be enforced.
+allowed_tools: Read, Grep, Glob, Bash
+model: sonnet
 ---
 
 # Claude Code Review
